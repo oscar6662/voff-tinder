@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import logo from './logo.svg';
+import close from './close.png';
 import s from './App.module.scss';
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState([]);
   const [newImage, getNewImage] = useState(false);
-  const [config, openConfig] = useState(false);
+  const [config, openConfig] = useState(true);
   const [breedOptions, setBreedOptions] = useState([]);
   const [subBreedOptions, setSubBreedOptions] = useState([]);
   const [breed, setBreed] = useState('');
@@ -53,12 +54,16 @@ function App() {
       configPage.style.opacity = "1";
       const body = document.getElementById('body');
       body.style.overflow = "hidden";
+      const configopener = document.getElementById('configopener');
+      configopener.style.visibility = "hidden";
     } else {
       const configPage = document.getElementById('config');
       configPage.style.visibility = "hidden";
       configPage.style.opacity = "0";
       const body = document.getElementById('body');
       body.style.overflow = "visible";
+      const configopener = document.getElementById('configopener');
+      configopener.style.visibility = "visible";
     }
     openConfig(!config);
   }
@@ -82,11 +87,14 @@ function App() {
 
     <div className={s.container}>
       <div className={s.header}>
-        <input type="image" src={logo} onClick={() => changeConfig()} />
+        <input id="configopener" type="image" src={logo} onClick={() => changeConfig()} />
       </div>
       <div id="config" className={s.config}>
         <div className={s.config__halfUp} onClick={() => changeConfig()} />
         <div className={s.config__halfDown}>
+          <div className={s.header}>
+            <input id="configopener" type="image" src={close} onClick={() => changeConfig()} />
+          </div>
           Select a specific breed you would like to match with:
           {loadingBreed ? (
             <p>Loading</p>
@@ -121,8 +129,8 @@ function App() {
       ) : (
         <div className={s.container__card}>
           <img src={data.message} alt=""></img>
-          <div>
-            <button onClick={() => getNewImage(!newImage)} >Next</button>
+          <div className={s.container__card__bottom}>
+            <button onClick={() => getNewImage(!newImage)}>Next</button>
             <button onClick={() => getNewImage(!newImage)}>Like</button>
           </div>
         </div>
