@@ -1,16 +1,60 @@
 .container {
     height: calc(100vh);
-    width:100%;
-    display:flex;
+    width: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
+
     &__card {
         height: 40%;
-        display:flex;
+        display: flex;
         flex-direction: column;
+
         img {
-            height: 100%;
+            max-height: 100%;
+            width: 100%;
         }
     }
-   
+
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 20px;
+
+    input {
+        height: 20px;
+    }
+}
+
+.config {
+    visibility: hidden;
+    position: absolute;
+    z-index: 100;
+    height: calc(100vh);
+    width: 100%;
+    transition: visibility 0s, opacity 0.5s linear;
+    opacity: 0;
+    display:flex;
+    flex-direction: column;
+    &__halfUp {
+        height:50%;
+        width:100%;
+        background: rgba(161, 237, 250, 0.249);
+    }
+    &__halfDown {
+        height:50%;
+        width:100%;
+        background-color: rgb(250, 222, 250);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        select {
+            margin-top: 1rem;
+
+        }
+    }
 }
