@@ -13,11 +13,21 @@ const app = express();
 app.use(express.static(path.join(__dirname, '/../client/build')));
 
 app.get('/api/dog', async (req, res) => {
+    const { breed } = req.query;
+    const { subreed } = req.query;
     try {
-        const d = await fetch('https://dog.ceo/api/breeds/image/random');
+        let url= 'https://dog.ceo/api/breeds/image/random';
+        breed.trim() && (
+            url = `https://dog.ceo/api/breed/${breed}/images/random`
+        );
+        subreed.trim() && (
+            url = `https://dog.ceo/api/breed/${breed}/${subreed}/images/random`
+        );
+        const d = await fetch(url);
         const j = await d.json();
         return res.json(j);
     } catch (error) {
+        console.log(error);
         return res.status(500).json({'error': error })
     }
 });

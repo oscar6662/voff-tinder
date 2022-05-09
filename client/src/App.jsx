@@ -7,7 +7,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingBreed, setLoadingBreed] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState('');
   const [newImage, getNewImage] = useState(false);
   const [config, openConfig] = useState(true);
   const [breedOptions, setBreedOptions] = useState([]);
@@ -15,6 +15,7 @@ function App() {
   const [breed, setBreed] = useState('');
   const [subBreed, setSubBreed] = useState('');
   const [subreedExists, setSubreedExist] = useState(false);
+  let liked = [];
   /**
    * Initizalization Related functions
    */
@@ -22,9 +23,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const r = await fetch('/api/dog');
+        const r = await fetch(`/api/dog?breed=${breed}&subreed=${subBreed}`);
         const j = await r.json();
-        setData(j);
+        setData(j.message);
       } catch (error) {
         setIsError(true)
       }
@@ -64,8 +65,22 @@ function App() {
       body.style.overflow = "visible";
       const configopener = document.getElementById('configopener');
       configopener.style.visibility = "visible";
+      getNewImage(!newImage);
     }
     openConfig(!config);
+  }
+
+  function likeImage() {
+    const currentLikes = JSON.parse(localStorage.getItem('myDogs'));
+    const imageID = data.replace(/https:\/\/.{1,}\/breeds\/.{1,}\//gm, '');
+    if (currentLikes) {
+      const input = [...currentLikes, imageID];
+      localStorage.setItem('myDogs', JSON.stringify(input));
+    } else {
+      let input = [imageID];
+      localStorage.setItem('myDogs', JSON.stringify(input));
+    }
+    getNewImage(!newImage);
   }
 
   function breedSelect(e) {
@@ -128,10 +143,14 @@ function App() {
         <p>Loading</p>
       ) : (
         <div className={s.container__card}>
-          <img src={data.message} alt=""></img>
+          <img src={data} alt=""></img>
           <div className={s.container__card__bottom}>
             <button onClick={() => getNewImage(!newImage)}>Next</button>
-            <button onClick={() => getNewImage(!newImage)}>Like</button>
+            {JSON.parse(localStorage.getItem('myDogs')).includes(data.replace(/https:\/\/.{1,}\/breeds\/.{1,}\//gm, '')) ? (
+              <button disabled>Liked Dog!</button>
+            ) : (
+              <button onClick={() => likeImage()}>Like</button>
+            )}
           </div>
         </div>
       )}
