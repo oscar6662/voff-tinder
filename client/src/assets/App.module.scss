@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: lightblue;
 
     &__card {
         height: 300px;
@@ -19,8 +20,8 @@
         &__inner {
             background: pink;
             padding: 20px;
-            border-radius: 3px;
-            box-shadow: 3px 3px black;
+            border-radius: 10px;
+            box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 1), 0 10px 10px -10px rgba(50, 50, 73, 1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -73,7 +74,12 @@
     margin: 20px;
 
     input {
+        padding: 20px;  
         height: 15px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 1), 0 10px 10px -10px rgba(50, 50, 73, 1);
+
     }
 }
 

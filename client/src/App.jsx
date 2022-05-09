@@ -67,6 +67,7 @@ function App() {
       body.style.overflow = "hidden";
       const configopener = document.getElementById('configopener');
       configopener.style.visibility = "hidden";
+
     } else {
       const configPage = document.getElementById('config');
       configPage.style.visibility = "hidden";
@@ -75,6 +76,7 @@ function App() {
       body.style.overflow = "visible";
       const configopener = document.getElementById('configopener');
       configopener.style.visibility = "visible";
+      configopener.style.background = "black";
     }
     openConfig(!config);
   }
@@ -125,7 +127,7 @@ function App() {
             <>
               <select onChange={breedSelect} value={breed}>
                 {Object.keys(breedOptions).map((keyName, i) =>
-                  <option value={keyName}>
+                  <option key = {keyName} value={keyName}>
                     {keyName}
                   </option>
                 )}
@@ -135,7 +137,7 @@ function App() {
                   <>Select a sub-breed:</>
                   <select onChange={subBreedSelect}>
                     {subBreedOptions.map((keyName, i) =>
-                      <option value={keyName}>
+                      <option key = {keyName} value={keyName}>
                         {keyName}
                       </option>
                     )}
@@ -156,7 +158,8 @@ function App() {
             <img src={data} alt=""></img>
             <div className={s.container__card__inner__bottom}>
               <button onClick={() => getNewImage(!newImage)}>Next</button>
-              {JSON.parse(localStorage.getItem('myDogs')).includes(data.replace(/https:\/\/.{1,}\/breeds\/.{1,}\//gm, '')) ? (
+              {JSON.parse(localStorage.getItem('myDogs')) && 
+                JSON.parse(localStorage.getItem('myDogs')).includes(data.replace(/https:\/\/.{1,}\/breeds\/.{1,}\//gm, '')) ? (
                 <button disabled>Liked Dog!</button>
               ) : (
                 <button onClick={() => likeImage()}>Like</button>
